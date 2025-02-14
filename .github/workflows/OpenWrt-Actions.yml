@@ -212,12 +212,10 @@ jobs:
         mv ${WORKPATH}/$CONFIG_FILE .config
         make defconfig
 
-    - name: SSH远程连接服务器
+    - name: SSH远程连接服务器配置固件
       uses: csexton/debugger-action@master
-      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.SSH_ACTION == 'true')
-      env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
+
 
     - name: 输出编译信息
       run: |
